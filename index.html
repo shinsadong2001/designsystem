@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11ST Design System</title>
+  <link rel="stylesheet" href="tokens/theme.css" />
+  <style>
+    /* =============================================
+       Base Reset & Layout
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family-pretendard);
+      background: #f5f5f5;
+      color: var(--color-gray-02);
+      min-height: 100vh;
+    }
+
+    /* =============================================
+       Design System Header
+    ============================================= */
+    .ds-header {
+      background: var(--color-gray-01);
+      color: var(--color-gray-14);
+      padding: 32px 48px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #333;
+    }
+    .ds-header h1 {
+      font-size: 20px;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: -0.5px;
+    }
+    .ds-header h1 span { color: var(--color-primary-red); }
+    .ds-header nav { display: flex; gap: 24px; }
+    .ds-header nav a {
+      color: var(--color-gray-09);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: var(--font-weight-regular);
+      transition: color 0.15s;
+    }
+    .ds-header nav a:hover { color: var(--color-gray-14); }
+
+    /* =============================================
+       Main Layout
+    ============================================= */
+    .ds-main {
+      display: flex;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* Sidebar */
+    .ds-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: var(--color-gray-14);
+      border-right: 1px solid var(--color-gray-11);
+      padding: 32px 0;
+      position: sticky;
+      top: 72px;
+      height: calc(100vh - 72px);
+      overflow-y: auto;
+    }
+    .ds-sidebar-group { margin-bottom: 8px; }
+    .ds-sidebar-label {
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-06);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 24px 4px;
+    }
+    .ds-sidebar a {
+      display: block;
+      padding: 8px 24px;
+      font-size: 14px;
+      color: var(--color-gray-04);
+      text-decoration: none;
+      border-radius: 0;
+      transition: all 0.1s;
+      border-left: 2px solid transparent;
+    }
+    .ds-sidebar a:hover {
+      color: var(--color-gray-02);
+      background: var(--color-gray-12);
+      border-left-color: var(--color-gray-09);
+    }
+    .ds-sidebar a.active {
+      color: var(--color-primary-red);
+      background: #fff0f2;
+      border-left-color: var(--color-primary-red);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* Content area */
+    .ds-content {
+      flex: 1;
+      padding: 48px;
+      overflow-y: auto;
+      max-width: calc(100% - 220px);
+    }
+
+    /* =============================================
+       Section
+    ============================================= */
+    .ds-section {
+      margin-bottom: 80px;
+      scroll-margin-top: 100px;
+    }
+    .ds-section-title {
+      font-size: var(--font-size-headline-6);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-01);
+      margin-bottom: 8px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--color-gray-11);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ds-section-title .badge {
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-06);
+      background: var(--color-gray-12);
+      border-radius: 100px;
+      padding: 2px 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .ds-section-desc {
+      font-size: var(--font-size-body-3);
+      color: var(--color-gray-05);
+      margin-bottom: 32px;
+      line-height: var(--line-height-body-3-relaxed);
+    }
+    .ds-subsection { margin-bottom: 40px; }
+    .ds-subsection-title {
+      font-size: var(--font-size-subtitle-4);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-03);
+      margin-bottom: 16px;
+    }
+
+    /* =============================================
+       Color Swatches
+    ============================================= */
+    .color-group { margin-bottom: 32px; }
+    .color-group-label {
+      font-size: 12px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-05);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .color-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .color-swatch:hover .swatch-chip { transform: scale(1.05); }
+    .swatch-chip {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.15s;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .swatch-chip.small { width: 56px; height: 56px; border-radius: 8px; }
+    .swatch-info { width: 80px; }
+    .swatch-info.small { width: 56px; }
+    .swatch-name {
+      font-size: 12px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-03);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .swatch-var {
+      font-size: 11px;
+      color: var(--color-gray-06);
+      font-family: monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .swatch-hex {
+      font-size: 11px;
+      color: var(--color-gray-07);
+      font-family: monospace;
+    }
+
+    /* =============================================
+       Typography Scale
+    ============================================= */
+    .typo-table { width: 100%; border-collapse: collapse; }
+    .typo-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-06);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 16px;
+      background: var(--color-gray-12);
+      border-bottom: 1px solid var(--color-gray-11);
+    }
+    .typo-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-gray-12);
+      vertical-align: middle;
+    }
+    .typo-table tr:last-child td { border-bottom: none; }
+    .typo-table tr:hover td { background: var(--color-gray-13); }
+    .typo-sample { line-height: 1; }
+    .typo-token {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--color-gray-05);
+      background: var(--color-gray-12);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .typo-spec { font-size: 12px; color: var(--color-gray-06); }
+
+    /* =============================================
+       Component Showcase
+    ============================================= */
+    .component-card {
+      background: var(--color-gray-14);
+      border: 1px solid var(--color-gray-11);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .component-card-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--color-gray-12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .component-card-title {
+      font-size: var(--font-size-subtitle-6);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-02);
+    }
+    .component-card-meta { display: flex; gap: 8px; }
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: var(--font-weight-bold);
+    }
+    .tag-blue { background: #e8f4fd; color: #0B83E6; }
+    .tag-gray { background: var(--color-gray-12); color: var(--color-gray-05); }
+    .tag-red  { background: #fff0f2; color: var(--color-primary-red); }
+    .tag-green { background: #edf7f0; color: #249356; }
+
+    .component-preview {
+      padding: 32px;
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .component-preview.dark { background: var(--color-gray-03); }
+    .component-preview.phone {
+      background: #e8e8e8;
+      padding: 40px;
+    }
+    .component-code {
+      padding: 16px 24px;
+      background: var(--color-gray-01);
+      overflow-x: auto;
+    }
+    .component-code pre {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #e8e8e8;
+      white-space: pre;
+    }
+    .component-code .kw { color: #c792ea; }
+    .component-code .str { color: #c3e88d; }
+    .component-code .cmt { color: #546e7a; }
+    .component-code .prop { color: #80cbc4; }
+    .component-code .val { color: #f78c6c; }
+
+    /* =============================================
+       Phone Frame (컴포넌트 미리보기용)
+    ============================================= */
+    .phone-frame {
+      width: 375px;
+      background: var(--color-gray-14);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    }
+    .phone-frame-label {
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-06);
+      text-align: center;
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* =============================================
+       GNB Component Styles (inline simulation)
+    ============================================= */
+    .gnb {
+      width: 100%;
+      background: var(--color-gray-14);
+      position: relative;
+    }
+    .gnb-statusbar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--color-gray-14);
+    }
+    .gnb-statusbar-time {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-gray-01);
+    }
+    .gnb-statusbar-icons { display: flex; gap: 6px; align-items: center; }
+    .gnb-nav {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--color-gray-14);
+    }
+    .gnb-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .gnb-logo-text {
+      /* Figma 실제 에셋으로 교체됨 — 이 클래스는 fallback용 */
+      display: block;
+      width: 56px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .gnb-logo-dropdown {
+      width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gnb-right { display: flex; gap: 4px; align-items: center; }
+    .gnb-icon-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; cursor: pointer;
+      position: relative;
+    }
+    .gnb-badge {
+      position: absolute;
+      top: 0; left: 23px;
+      min-width: 16px; height: 16px;
+      background: var(--color-primary-red);
+      color: var(--color-gray-14);
+      font-size: 11px;
+      font-weight: var(--font-weight-regular);
+      border-radius: 100px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+      font-family: var(--font-family-pretendard);
+    }
+    .gnb-search {
+      height: 46px;
+      padding: 0 16px;
+      background: var(--color-gray-14);
+      display: flex;
+      align-items: center;
+    }
+    .gnb-search-inner {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-gray-13);
+      border: 1px solid var(--color-gray-10);
+      border-radius: 100px;
+      padding: 4px 4px 4px 16px;
+    }
+    .gnb-search-placeholder {
+      font-size: var(--font-size-body-3);
+      color: var(--color-gray-05);
+      font-family: var(--font-family-pretendard);
+    }
+    .gnb-search-btn {
+      width: 30px; height: 30px;
+      background: var(--color-primary-red);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: none; cursor: pointer;
+    }
+    .gnb-title-text {
+      font-size: var(--font-size-subtitle-4);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-family-pretendard);
+      color: var(--color-gray-02);
+    }
+
+    /* =============================================
+       TabBar Component Styles (inline simulation)
+    ============================================= */
+    .tabbar {
+      width: 100%;
+      background: var(--color-gray-14);
+    }
+    .tabbar-bottom {
+      height: 56px;
+      background: var(--color-gray-14);
+      box-shadow: 0 0 5px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: flex-end;
+    }
+    .tab-item {
+      flex: 1 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 8px;
+      position: relative;
+      cursor: pointer;
+    }
+    .tab-item.no-flex { flex: 0 0 auto; padding: 10px 8px; }
+    .tab-badge {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(12px);
+      min-width: 16px; height: 16px;
+      background: var(--color-primary-red);
+      color: var(--color-gray-14);
+      font-size: 11px;
+      border-radius: 100px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+      font-family: var(--font-family-pretendard);
+    }
+    .home-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 21px 0 8px;
+      background: var(--color-gray-14);
+    }
+    .home-indicator-bar {
+      width: 134px; height: 5px;
+      background: var(--color-gray-01);
+      border-radius: 100px;
+    }
+    .floating-banner {
+      padding: 0 12px;
+    }
+    .floating-banner-inner {
+      height: 56px;
+      border-radius: 100px;
+      background: linear-gradient(135deg, #FF5A2E 0%, var(--color-primary-red) 52%, #FF00EF 100%);
+      box-shadow: 0 0 4px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .floating-logo {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .floating-text {
+      flex: 1;
+      font-size: 12px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-14);
+      font-family: var(--font-family-noto-sans-kr);
+    }
+    .floating-close {
+      width: 18px; height: 18px;
+      background: var(--color-gray-02);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+
+    /* =============================================
+       Variant Grid
+    ============================================= */
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
+    }
+    .variant-item { display: flex; flex-direction: column; gap: 8px; }
+    .variant-label {
+      font-size: 12px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-05);
+      letter-spacing: 0.3px;
+    }
+
+    /* =============================================
+       Token Table
+    ============================================= */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .token-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--color-gray-12);
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-gray-05);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--color-gray-11);
+    }
+    .token-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--color-gray-12);
+      vertical-align: middle;
+    }
+    .token-table tr:last-child td { border-bottom: none; }
+    .token-table tr:hover td { background: var(--color-gray-13); }
+    .mono {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      color: #c678dd;
+      background: #f5f0ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* =============================================
+       Responsive & Utilities
+    ============================================= */
+    .flex-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+
+    /* Scroll spy active link */
+    :target { scroll-margin-top: 100px; }
+
+    /* =============================================
+       Figma Icon Helper Classes
+       Figma 에셋 기반 아이콘 (36×36 컨테이너 + 절대 위치 이미지)
+    ============================================= */
+    .fig-icon {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .fig-icon img { display: block; max-width: none; }
+    .fig-icon.fi-icon-sm { width: 28px; height: 28px; }
+
+    /* 뒤로가기 (두 패스 조각) */
+    .fi-back { position: absolute; inset: 0; }
+    .fi-back-p1 {
+      position: absolute;
+      top: 30.56%; right: 58.33%; bottom: 30.54%; left: 22.22%;
+    }
+    .fi-back-p1 > div { position: absolute; inset: -5.36% -10.71%; }
+    .fi-back-p1 img { width: 100%; height: 100%; }
+    .fi-back-p2 {
+      position: absolute;
+      top: 50%; bottom: 50%; left: 22.22%; right: 22.22%;
+    }
+    .fi-back-p2 > div { position: absolute; inset: -0.75px -3.75%; }
+    .fi-back-p2 img { width: 100%; height: 100%; }
+
+    /* 사이드메뉴 */
+    .fi-sidemenu {
+      position: absolute;
+      top: 25%; right: 20.79%; bottom: 23.61%; left: 21.59%;
+    }
+    .fi-sidemenu img { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* 검색 */
+    .fi-search {
+      position: absolute;
+      top: calc(50% - 0.11px); transform: translateY(-50%);
+      left: 20.14%; right: 18.68%;
+      height: 22.274px;
+    }
+    .fi-search img { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* 홈 */
+    .fi-home {
+      position: absolute;
+      top: 20.49%; right: 19.44%; bottom: 19.44%; left: 19.44%;
+    }
+    .fi-home img { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .fi-home--active img {
+      filter: invert(12%) sepia(96%) saturate(7476%) hue-rotate(341deg) brightness(103%) contrast(116%);
+    }
+
+    /* 마이페이지 */
+    .fi-mypage {
+      position: absolute;
+      top: 17.36%; right: 20.14%; bottom: 18.75%; left: 20.14%;
+    }
+    .fi-mypage img { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* 11talk */
+    .fi-talk {
+      position: absolute;
+      top: 22.22%; right: 21.36%; bottom: 25%; left: 25.86%;
+    }
+    .fi-talk img { width: 100%; height: 100%; }
+
+    /* 최근 본 상품 (PNG) */
+    .fi-recent {
+      position: absolute;
+      top: 21.53%; right: 21.53%; bottom: 21.53%; left: 21.53%;
+    }
+    .fi-recent img { width: 100%; height: 100%; }
+
+    /* 최근 본 상품 No (SVG) */
+    .fi-recentno {
+      position: absolute;
+      top: 19.44%; right: 19.44%; bottom: 19.44%; left: 19.44%;
+    }
+    .fi-recentno img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="ds-header">
+  <h1><span>11ST</span> Design System</h1>
+  <nav>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#gnb">GNB</a>
+    <a href="#tabbar">TabBar</a>
+    <a href="#tokens">Tokens</a>
+  </nav>
+</header>
+
+<div class="ds-main">
+
+  <!-- ============================================================
+       SIDEBAR
+  ============================================================ -->
+  <aside class="ds-sidebar">
+    <div class="ds-sidebar-group">
+      <div class="ds-sidebar-label">Foundation</div>
+      <a href="#colors">색상 (Colors)</a>
+      <a href="#typography">타이포그래피</a>
+    </div>
+    <div class="ds-sidebar-group">
+      <div class="ds-sidebar-label">Navigation</div>
+      <a href="#gnb">GNB</a>
+      <a href="#gnb-home">— Home 베리언트</a>
+      <a href="#gnb-titlebar">— TitleBar 베리언트</a>
+      <a href="#gnb-search">— Search 베리언트</a>
+      <a href="#tabbar">Tab Bar</a>
+      <a href="#tabbar-variants">— 베리언트</a>
+    </div>
+    <div class="ds-sidebar-group">
+      <div class="ds-sidebar-label">Reference</div>
+      <a href="#tokens">토큰 목록</a>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       CONTENT
+  ============================================================ -->
+  <main class="ds-content">
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+    <div style="margin-bottom: 64px; padding: 40px; background: linear-gradient(135deg, var(--color-gray-01) 0%, #2a2a2a 100%); border-radius: 20px; color: var(--color-gray-14);">
+      <p style="font-size:12px; font-weight:700; color:var(--color-primary-red); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">11ST Design System</p>
+      <h2 style="font-size:var(--font-size-headline-2); font-weight:var(--font-weight-bold); margin-bottom:12px; line-height:var(--line-height-headline-2);">컴포넌트 &amp; 토큰 쇼케이스</h2>
+      <p style="font-size:var(--font-size-body-3); color:var(--color-gray-08); line-height:var(--line-height-body-3-relaxed);">
+        Figma에서 추출한 Color · Typography 토큰과 GNB · TabBar 컴포넌트를 시각적으로 확인할 수 있습니다.<br>
+        모든 값은 <code style="background:rgba(255,255,255,0.1); padding:1px 6px; border-radius:4px; font-size:12px;">tokens/theme.css</code> 의 CSS 변수로 연결됩니다.
+      </p>
+      <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+        <span style="background:rgba(255,0,56,0.2); color:var(--color-primary-red); padding:4px 12px; border-radius:100px; font-size:12px; font-weight:700;">Figma → tokens/theme.css</span>
+        <span style="background:rgba(255,255,255,0.1); color:var(--color-gray-09); padding:4px 12px; border-radius:100px; font-size:12px;">React + TypeScript</span>
+        <span style="background:rgba(255,255,255,0.1); color:var(--color-gray-09); padding:4px 12px; border-radius:100px; font-size:12px;">Tailwind CSS</span>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         COLORS
+    ========================================================= -->
+    <section id="colors" class="ds-section">
+      <h2 class="ds-section-title">색상 (Colors) <span class="badge">Foundation</span></h2>
+      <p class="ds-section-desc">Figma 변수에서 추출된 브랜드 컬러 시스템입니다. 모든 색상은 CSS 변수로 정의되어 있으며 헥스 코드를 직접 사용하지 않습니다.</p>
+
+      <div class="color-group">
+        <div class="color-group-label">Primary — 브랜드 컬러</div>
+        <div class="color-row">
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-red);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">11st Red</div>
+              <div class="swatch-var">--color-primary-red</div>
+              <div class="swatch-hex">#FF0038</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-t-blue);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">T Blue</div>
+              <div class="swatch-var">--color-primary-t-blue</div>
+              <div class="swatch-hex">#3617CE</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-ooah-blue);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">OOAh Blue</div>
+              <div class="swatch-var">--color-primary-ooah-blue</div>
+              <div class="swatch-hex">#0F0FD9</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-freshtable-mint);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Freshtable Mint</div>
+              <div class="swatch-var">--color-primary-freshtable-mint</div>
+              <div class="swatch-hex">#00B4A5</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-beautyclub-purple);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Beautyclub Purple</div>
+              <div class="swatch-var">--color-primary-beautyclub-purple</div>
+              <div class="swatch-hex">#8800DC</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-familyplus-pink);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Familyplus Pink</div>
+              <div class="swatch-var">--color-primary-familyplus-pink</div>
+              <div class="swatch-hex">#FF65AE</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-martplus-orange);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Martplus Orange</div>
+              <div class="swatch-var">--color-primary-martplus-orange</div>
+              <div class="swatch-hex">#FF7700</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-primary-amazon-bluegreen);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Amazon Bluegreen</div>
+              <div class="swatch-var">--color-primary-amazon-bluegreen</div>
+              <div class="swatch-hex">#49A3C7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <div class="color-group-label">Secondary</div>
+        <div class="color-row">
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-secondary-blue);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Blue</div>
+              <div class="swatch-var">--color-secondary-blue</div>
+              <div class="swatch-hex">#0B83E6</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-secondary-yellow);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Yellow</div>
+              <div class="swatch-var">--color-secondary-yellow</div>
+              <div class="swatch-hex">#FFA700</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-secondary-green);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Green</div>
+              <div class="swatch-var">--color-secondary-green</div>
+              <div class="swatch-hex">#249356</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-brand-refurbly-blue);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Refurbly Blue</div>
+              <div class="swatch-var">--color-brand-refurbly-blue</div>
+              <div class="swatch-hex">#5274FF</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <div class="color-group-label">Grayscale — g01(Black) → g14(White)</div>
+        <div class="color-row">
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-01); border:1px solid #ddd;"></div>
+            <div class="swatch-info small"><div class="swatch-name">g01</div><div class="swatch-hex">#000000</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-02);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g02</div><div class="swatch-hex">#111111</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-03);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g03</div><div class="swatch-hex">#333333</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-04);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g04</div><div class="swatch-hex">#666666</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-05);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g05</div><div class="swatch-hex">#777777</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-06);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g06</div><div class="swatch-hex">#949494</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-07);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g07</div><div class="swatch-hex">#999999</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-08);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g08</div><div class="swatch-hex">#BBBBBB</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-09);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g09</div><div class="swatch-hex">#CCCCCC</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-10);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g10</div><div class="swatch-hex">#DDDDDD</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-11);"></div>
+            <div class="swatch-info small"><div class="swatch-name">g11</div><div class="swatch-hex">#EEEEEE</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-12); border:1px solid #ddd;"></div>
+            <div class="swatch-info small"><div class="swatch-name">g12</div><div class="swatch-hex">#F4F4F4</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-13); border:1px solid #ddd;"></div>
+            <div class="swatch-info small"><div class="swatch-name">g13</div><div class="swatch-hex">#FAFAFA</div></div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip small" style="background:var(--color-gray-14); border:1px solid #ddd;"></div>
+            <div class="swatch-info small"><div class="swatch-name">g14</div><div class="swatch-hex">#FFFFFF</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-group">
+        <div class="color-group-label">Dimmed / Overlay</div>
+        <div class="color-row">
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-dimmed-img);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">img Dimmed</div>
+              <div class="swatch-var">--color-dimmed-img</div>
+              <div class="swatch-hex">#434A79</div>
+            </div>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch-chip" style="background:var(--color-dimmed-all);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">all Dimmed</div>
+              <div class="swatch-var">--color-dimmed-all</div>
+              <div class="swatch-hex">#000000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TYPOGRAPHY
+    ========================================================= -->
+    <section id="typography" class="ds-section">
+      <h2 class="ds-section-title">타이포그래피 <span class="badge">Foundation</span></h2>
+      <p class="ds-section-desc">Pretendard 기반 Common 스케일입니다. 크기와 줄높이는 모두 CSS 변수로 연결됩니다.</p>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Display / Headline</div>
+        <table class="typo-table">
+          <thead>
+            <tr>
+              <th>샘플</th>
+              <th>토큰</th>
+              <th>Size / Weight / LineH</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="typo-sample" style="font-size:var(--font-size-ds-title-1);font-weight:var(--font-weight-bold);line-height:var(--line-height-ds-title-1);font-family:var(--font-family-pretendard)">DS Title</span></td>
+              <td><span class="typo-token">ds-title-1</span></td>
+              <td class="typo-spec">48px / 700 / 56px</td>
+            </tr>
+            <tr>
+              <td><span class="typo-sample" style="font-size:var(--font-size-headline-1);font-weight:var(--font-weight-bold);line-height:var(--line-height-headline-1);font-family:var(--font-family-pretendard)">Headline 1</span></td>
+              <td><span class="typo-token">headline-1</span></td>
+              <td class="typo-spec">32px / 700 / 38px</td>
+            </tr>
+            <tr>
+              <td><span class="typo-sample" style="font-size:var(--font-size-headline-2);font-weight:var(--font-weight-bold);font-family:var(--font-family-pretendard)">Headline 2</span></td>
+              <td><span class="typo-token">headline-2</span></td>
+              <td class="typo-spec">28px / 700 / 33px</td>
+            </tr>
+            <tr>
+              <td><span class="typo-sample" style="font-size:var(--font-size-headline-6);font-weight:var(--font-weight-bold);font-family:var(--font-family-pretendard)">Headline 6</span></td>
+              <td><span class="typo-token">headline-6</span></td>
+              <td class="typo-spec">24px / 700 / 29px</td>
+            </tr>
+            <tr>
+              <td><span class="typo-sample" style="font-size:var(--font-size-headline-9);font-weight:var(--font-weight-bold);font-family:var(--font-family-pretendard)">Headline 9</span></td>
+              <td><span class="typo-token">headline-9</span></td>
+              <td class="typo-spec">21px / 700 / 25px</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Title / Subtitle / Body / Caption</div>
+        <table class="typo-table">
+          <thead>
+            <tr><th>샘플</th><th>토큰</th><th>Size / Weight / LineH</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span style="font-size:var(--font-size-title-1);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Title 1 Regular</span></td>
+              <td><span class="typo-token">title-1</span></td>
+              <td class="typo-spec">20px / 400 / 24px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-title-2);font-weight:var(--font-weight-bold);font-family:var(--font-family-pretendard)">Title 2 Bold</span></td>
+              <td><span class="typo-token">title-2</span></td>
+              <td class="typo-spec">20px / 700 / 24px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-subtitle-1);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Subtitle 1 Regular</span></td>
+              <td><span class="typo-token">subtitle-1</span></td>
+              <td class="typo-spec">18px / 400 / 21px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-subtitle-4);font-weight:var(--font-weight-bold);font-family:var(--font-family-pretendard)">Subtitle 4 Bold</span></td>
+              <td><span class="typo-token">subtitle-4</span></td>
+              <td class="typo-spec">17px / 700 / 20px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-body-1);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Body 1 Regular</span></td>
+              <td><span class="typo-token">body-1</span></td>
+              <td class="typo-spec">15px / 400 / 18px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-body-3);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Body 3 Regular</span></td>
+              <td><span class="typo-token">body-3</span></td>
+              <td class="typo-spec">14px / 400 / 18px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-caption-1);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Caption 1 Regular</span></td>
+              <td><span class="typo-token">caption-1</span></td>
+              <td class="typo-spec">13px / 400 / 16px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-caption-3);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Caption 3 Regular</span></td>
+              <td><span class="typo-token">caption-3</span></td>
+              <td class="typo-spec">12px / 400 / 14px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-caption-5);font-weight:var(--font-weight-regular);font-family:var(--font-family-pretendard)">Caption 5 Regular</span></td>
+              <td><span class="typo-token">caption-5</span></td>
+              <td class="typo-spec">11px / 400 / 13px</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:var(--font-size-caption-7);font-weight:var(--font-weight-medium);font-family:var(--font-family-pretendard)">Caption 7 Medium</span></td>
+              <td><span class="typo-token">caption-7</span></td>
+              <td class="typo-spec">10px / 500 / 12px</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         GNB COMPONENT
+    ========================================================= -->
+    <section id="gnb" class="ds-section">
+      <h2 class="ds-section-title">GNB <span class="badge">Navigation</span></h2>
+      <p class="ds-section-desc">
+        Global Navigation Bar. <code style="font-family:monospace;font-size:13px;background:var(--color-gray-12);padding:1px 6px;border-radius:4px;">components/GNB/GNB.tsx</code><br>
+        Props: <strong>type</strong> · <strong>subType</strong> · <strong>title</strong> · <strong>cartCount</strong> · <strong>disabled</strong> · <strong>showStatusBar</strong> · <strong>onBack</strong> · <strong>onCart</strong> · <strong>onSearch</strong>
+      </p>
+
+      <!-- Home 베리언트 -->
+      <div id="gnb-home" class="ds-subsection">
+        <div class="ds-subsection-title">Home 베리언트</div>
+        <div class="variant-grid">
+
+          <!-- Home / None -->
+          <div class="variant-item">
+            <div class="variant-label">type="Home" subType="None"</div>
+            <div class="phone-frame">
+              <div class="gnb">
+                <div class="gnb-statusbar">
+                  <span class="gnb-statusbar-time">11:11</span>
+                  <div class="gnb-statusbar-icons">
+                    <svg width="18" height="12" viewBox="0 0 18 12" fill="var(--color-gray-01)"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4" y="2" width="3" height="10" rx="1"/><rect x="8" y="0" width="3" height="12" rx="1"/><rect x="12" y="0" width="3" height="12" rx="1" opacity=".3"/></svg>
+                    <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="var(--color-gray-01)" stroke-width="1"/><rect x="1.5" y="2.5" width="17" height="7" rx="1" fill="var(--color-gray-01)"/></svg>
+                  </div>
+                </div>
+                <div class="gnb-nav">
+                  <div class="gnb-logo">
+                    <!-- Logo11st Default — Figma asset (node 112:447) -->
+                    <div class="gnb-logo-text" role="img" aria-label="11번가" style="position:relative;">
+                      <div style="position:absolute;top:0;right:0.14%;bottom:0;left:0;">
+                        <img alt="11번가" src="assets/logo-default.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;">
+                      </div>
+                    </div>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M5 7L9 11L13 7" stroke="var(--color-gray-02)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <div class="gnb-right">
+                    <button class="gnb-icon-btn" style="position:relative;">
+                      <!-- ic_gnb_cart — Figma asset (node 578:1321) -->
+                      <div class="fig-icon"><div style="position:absolute;top:17.36%;right:18.24%;bottom:17.36%;left:11.81%;"><img alt="" src="assets/ic-cart.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;"></div></div>
+                      <span class="gnb-badge">3</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="gnb-search">
+                  <div class="gnb-search-inner">
+                    <span class="gnb-search-placeholder">검색어를 입력해주세요</span>
+                    <button class="gnb-search-btn">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.5"/><path d="M9.5 9.5L12 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Home / DownScroll -->
+          <div class="variant-item">
+            <div class="variant-label">type="Home" subType="DownScroll"</div>
+            <div class="phone-frame">
+              <div class="gnb">
+                <div class="gnb-nav">
+                  <!-- Logo11st Default — Figma asset (node 112:447) -->
+                  <div class="gnb-logo-text" role="img" aria-label="11번가" style="position:relative;">
+                    <div style="position:absolute;top:0;right:0.14%;bottom:0;left:0;">
+                      <img alt="11번가" src="assets/logo-default.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;">
+                    </div>
+                  </div>
+                  <div class="gnb-right">
+                    <!-- Search icon — Figma asset -->
+                    <button class="gnb-icon-btn" aria-label="검색">
+                      <div class="fig-icon"><div class="fi-search"><img alt="" src="assets/ic-search.svg"></div></div>
+                    </button>
+                    <button class="gnb-icon-btn" style="position:relative;" aria-label="장바구니 3개">
+                      <!-- ic_gnb_cart — Figma asset (node 578:1321) -->
+                      <div class="fig-icon"><div style="position:absolute;top:17.36%;right:18.24%;bottom:17.36%;left:11.81%;"><img alt="" src="assets/ic-cart.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;"></div></div>
+                      <span class="gnb-badge">3</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /variant-grid -->
+      </div>
+
+      <!-- TitleBar 베리언트 -->
+      <div id="gnb-titlebar" class="ds-subsection">
+        <div class="ds-subsection-title">TitleBar 베리언트 (PDP · Sub · SRP 등)</div>
+        <div class="variant-grid">
+
+          <!-- PDP -->
+          <div class="variant-item">
+            <div class="variant-label">type="PDP" title="상품 상세"</div>
+            <div class="phone-frame">
+              <div class="gnb">
+                <div class="gnb-nav">
+                  <button class="gnb-icon-btn">
+                    <div class="fig-icon"><div class="fi-back"><div class="fi-back-p1"><div style="position:absolute;inset:-5.36% -10.71%"><img alt="" src="assets/ic-back-p1.svg" style="width:100%;height:100%;"></div></div><div class="fi-back-p2"><div style="position:absolute;inset:-0.75px -3.75%"><img alt="" src="assets/ic-back-p2.svg" style="width:100%;height:100%;"></div></div></div></div>
+                  </button>
+                  <span class="gnb-title-text" style="flex:1;padding:0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">상품 상세</span>
+                  <div class="gnb-right">
+                    <button class="gnb-icon-btn">
+                      <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="15.5" cy="15.5" r="7.5" stroke="var(--color-gray-02)" stroke-width="1.5"/><path d="M21.5 21.5L27 27" stroke="var(--color-gray-02)" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <button class="gnb-icon-btn" style="position:relative;">
+                      <!-- ic_gnb_cart — Figma asset (node 578:1321) -->
+                      <div class="fig-icon"><div style="position:absolute;top:17.36%;right:18.24%;bottom:17.36%;left:11.81%;"><img alt="" src="assets/ic-cart.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;"></div></div>
+                      <span class="gnb-badge">1</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disabled -->
+          <div class="variant-item">
+            <div class="variant-label">type="Sub" title="카테고리" disabled</div>
+            <div class="phone-frame">
+              <div class="gnb" style="opacity:0.4;pointer-events:none;">
+                <div class="gnb-nav">
+                  <button class="gnb-icon-btn">
+                    <div class="fig-icon"><div class="fi-back"><div class="fi-back-p1"><div style="position:absolute;inset:-5.36% -10.71%"><img alt="" src="assets/ic-back-p1.svg" style="width:100%;height:100%;"></div></div><div class="fi-back-p2"><div style="position:absolute;inset:-0.75px -3.75%"><img alt="" src="assets/ic-back-p2.svg" style="width:100%;height:100%;"></div></div></div></div>
+                  </button>
+                  <span class="gnb-title-text" style="flex:1;padding:0 8px;">카테고리</span>
+                  <div class="gnb-right">
+                    <button class="gnb-icon-btn" style="position:relative;">
+                      <!-- ic_gnb_cart — Figma asset (node 578:1321) -->
+                      <div class="fig-icon"><div style="position:absolute;top:17.36%;right:18.24%;bottom:17.36%;left:11.81%;"><img alt="" src="assets/ic-cart.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;"></div></div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Search 베리언트 -->
+      <div id="gnb-search" class="ds-subsection">
+        <div class="ds-subsection-title">Search 베리언트</div>
+        <div class="variant-grid">
+          <div class="variant-item">
+            <div class="variant-label">type="Search" subType="검색어 입력전"</div>
+            <div class="phone-frame">
+              <div class="gnb">
+                <div class="gnb-nav" style="gap:4px;">
+                  <button class="gnb-icon-btn">
+                    <div class="fig-icon"><div class="fi-back"><div class="fi-back-p1"><div style="position:absolute;inset:-5.36% -10.71%"><img alt="" src="assets/ic-back-p1.svg" style="width:100%;height:100%;"></div></div><div class="fi-back-p2"><div style="position:absolute;inset:-0.75px -3.75%"><img alt="" src="assets/ic-back-p2.svg" style="width:100%;height:100%;"></div></div></div></div>
+                  </button>
+                  <div style="flex:1;" class="gnb-search-inner">
+                    <span class="gnb-search-placeholder">검색어를 입력해주세요</span>
+                    <button class="gnb-search-btn">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.5"/><path d="M9.5 9.5L12 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="variant-item">
+            <div class="variant-label">type="Search" subType="검색어 입력중"</div>
+            <div class="phone-frame">
+              <div class="gnb">
+                <div class="gnb-nav" style="gap:4px;">
+                  <button class="gnb-icon-btn">
+                    <div class="fig-icon"><div class="fi-back"><div class="fi-back-p1"><div style="position:absolute;inset:-5.36% -10.71%"><img alt="" src="assets/ic-back-p1.svg" style="width:100%;height:100%;"></div></div><div class="fi-back-p2"><div style="position:absolute;inset:-0.75px -3.75%"><img alt="" src="assets/ic-back-p2.svg" style="width:100%;height:100%;"></div></div></div></div>
+                  </button>
+                  <div style="flex:1;" class="gnb-search-inner">
+                    <span class="gnb-search-placeholder" style="color:var(--color-gray-02);">나이키 에어맥스</span>
+                    <button class="gnb-search-btn">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="white" stroke-width="1.5"/><path d="M9.5 9.5L12 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Props 코드 예시 -->
+      <div class="component-code" style="border-radius:12px; overflow:hidden; margin-top:8px;">
+        <pre><span class="cmt">// GNB 컴포넌트 사용 예시 (React + TypeScript)</span>
+<span class="kw">import</span> { GNB } <span class="kw">from</span> <span class="str">'./components'</span>;
+
+<span class="cmt">// 홈 기본</span>
+&lt;<span class="prop">GNB</span> <span class="val">type</span>=<span class="str">"Home"</span> <span class="val">subType</span>=<span class="str">"None"</span> <span class="val">cartCount</span>={<span class="val">3</span>} <span class="val">onCart</span>={handleCart} /&gt;
+
+<span class="cmt">// 스크롤 내렸을 때</span>
+&lt;<span class="prop">GNB</span> <span class="val">type</span>=<span class="str">"Home"</span> <span class="val">subType</span>=<span class="str">"DownScroll"</span> <span class="val">cartCount</span>={<span class="val">3</span>} /&gt;
+
+<span class="cmt">// 서브 페이지 타이틀바</span>
+&lt;<span class="prop">GNB</span> <span class="val">type</span>=<span class="str">"Sub"</span> <span class="val">title</span>=<span class="str">"상품 상세"</span> <span class="val">cartCount</span>={<span class="val">1</span>} <span class="val">onBack</span>={handleBack} /&gt;
+
+<span class="cmt">// 검색 모드</span>
+&lt;<span class="prop">GNB</span> <span class="val">type</span>=<span class="str">"Search"</span> <span class="val">subType</span>=<span class="str">"검색어 입력중"</span>
+     <span class="val">searchValue</span>={query} <span class="val">onSearchChange</span>={setQuery} /&gt;
+
+<span class="cmt">// 비활성화</span>
+&lt;<span class="prop">GNB</span> <span class="val">type</span>=<span class="str">"PDP"</span> <span class="val">title</span>=<span class="str">"마이페이지"</span> <span class="val">disabled</span> /&gt;</pre>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TABBAR COMPONENT
+    ========================================================= -->
+    <section id="tabbar" class="ds-section">
+      <h2 class="ds-section-title">Tab Bar <span class="badge">Navigation</span></h2>
+      <p class="ds-section-desc">
+        하단 탭 내비게이션. <code style="font-family:monospace;font-size:13px;background:var(--color-gray-12);padding:1px 6px;border-radius:4px;">components/TabBar/TabBar.tsx</code><br>
+        Props: <strong>type</strong> · <strong>activeTab</strong> · <strong>talkCount</strong> · <strong>disabled</strong> · <strong>onTabChange</strong>
+      </p>
+
+      <div id="tabbar-variants" class="variant-grid">
+
+        <!-- Home -->
+        <div class="variant-item">
+          <div class="variant-label">type="Home" activeTab="home"</div>
+          <div class="phone-frame">
+            <div class="tabbar">
+              <div class="tabbar-bottom">
+                <div class="tab-item"><div class="fig-icon"><div class="fi-sidemenu"><img alt="" src="assets/ic-sidemenu.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-search"><img alt="" src="assets/ic-search.svg"></div></div></div>
+                <div class="tab-item no-flex"><div class="fig-icon"><div class="fi-home fi-home--active"><img alt="" src="assets/ic-home.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-mypage"><img alt="" src="assets/ic-mypage.svg"></div></div></div>
+                <div class="tab-item" style="position:relative;">
+                  <div class="fig-icon"><div class="fi-talk"><div style="position:absolute;inset:-3.95%"><img alt="" src="assets/ic-talk.svg" style="width:100%;height:100%;"></div></div></div>
+                  <span class="tab-badge">88</span>
+                </div>
+              </div>
+              <div class="home-indicator"><div class="home-indicator-bar"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub -->
+        <div class="variant-item">
+          <div class="variant-label">type="Sub" activeTab="home" — 7탭</div>
+          <div class="phone-frame">
+            <div class="tabbar">
+              <div class="tabbar-bottom">
+                <div class="tab-item"><div class="fig-icon fi-icon-sm"><div class="fi-back"><div class="fi-back-p1"><img alt="" src="assets/ic-back-p1.svg"></div><div class="fi-back-p2"><img alt="" src="assets/ic-back-p2.svg"></div></div></div></div>
+                <div class="tab-item"><div class="fig-icon fi-icon-sm"><div class="fi-sidemenu"><img alt="" src="assets/ic-sidemenu.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon fi-icon-sm"><div class="fi-search"><img alt="" src="assets/ic-search.svg"></div></div></div>
+                <div class="tab-item no-flex"><div class="fig-icon fi-icon-sm"><div class="fi-home fi-home--active"><img alt="" src="assets/ic-home.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon fi-icon-sm"><div class="fi-mypage"><img alt="" src="assets/ic-mypage.svg"></div></div></div>
+                <div class="tab-item" style="position:relative;">
+                  <div class="fig-icon fi-icon-sm"><div class="fi-talk"><div style="position:absolute;inset:-3.95%"><img alt="" src="assets/ic-talk.svg" style="width:100%;height:100%;"></div></div></div>
+                  <span class="tab-badge">88</span>
+                </div>
+                <div class="tab-item"><div class="fig-icon fi-icon-sm"><div class="fi-recent"><div style="position:absolute;inset:-3.66%"><img alt="" width="22" height="22" src="assets/ic-recentgoods.png" style="width:100%;height:100%;"></div></div></div></div>
+              </div>
+              <div class="home-indicator"><div class="home-indicator-bar"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mw -->
+        <div class="variant-item">
+          <div class="variant-label">type="Mw" — 홈인디케이터 없음</div>
+          <div class="phone-frame">
+            <div class="tabbar">
+              <div class="tabbar-bottom" style="padding-top:8px;">
+                <div class="tab-item"><div class="fig-icon"><div class="fi-sidemenu"><img alt="" src="assets/ic-sidemenu.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-search"><img alt="" src="assets/ic-search.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-home fi-home--active"><img alt="" src="assets/ic-home.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-mypage"><img alt="" src="assets/ic-mypage.svg"></div></div></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-recentno"><img alt="" src="assets/ic-recentgoods-no.svg"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- customHomebar -->
+        <div class="variant-item">
+          <div class="variant-label">type="customHomebar" — Figma iOS_Tabbar/customHomeButton (node 24086:3811)</div>
+          <div class="phone-frame">
+            <div class="tabbar">
+              <!-- floating_btn_brand (node 24086:1306) — Figma 원본 구조 -->
+              <div style="display:flex;justify-content:center;width:100%;padding-bottom:4px;">
+                <div style="position:relative;width:162px;height:56px;flex-shrink:0;" aria-label="드리미 브랜드 배너">
+                  <!-- ic/ic_close: left:144px top:0 18×18 -->
+                  <div style="position:absolute;left:144px;top:0;width:18px;height:18px;">
+                    <div style="position:absolute;inset:0;background:#111111;border-radius:10px;"></div>
+                    <button aria-label="배너 닫기" style="position:absolute;inset:33.33%;background:none;border:none;padding:0;cursor:pointer;">
+                      <div style="position:absolute;inset:-5.89%;">
+                        <img alt="" src="assets/ic-close-x.svg" style="display:block;width:100%;height:100%;max-width:none;">
+                      </div>
+                    </button>
+                  </div>
+                  <!-- floating_brand: 144×56, overflow:clip, radius:100px -->
+                  <div style="position:absolute;left:0;top:0;width:144px;height:56px;border-radius:100px;overflow:clip;box-shadow:0 0 4px rgba(0,0,0,0.2);">
+                    <!-- BN/MW/홈탭플로팅배너: mask shape -->
+                    <div style="position:absolute;left:0;top:0;width:144px;height:56px;overflow:clip;-webkit-mask-image:url('assets/floating-banner-mask.svg');mask-image:url('assets/floating-banner-mask.svg');mask-mode:alpha;mask-repeat:no-repeat;mask-position:0 0;mask-size:144px 56px;">
+                      <!-- @ 컬러 변경: 그라디언트 배경 -->
+                      <div style="position:absolute;inset:0;-webkit-mask-image:url('assets/floating-banner-mask.svg');mask-image:url('assets/floating-banner-mask.svg');mask-mode:alpha;mask-repeat:no-repeat;mask-position:0 0;mask-size:144px 56px;">
+                        <img alt="" src="assets/floating-banner-fill.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;">
+                      </div>
+                      <!-- Ellipse1325: 장식선 -->
+                      <div style="position:absolute;height:1.776px;left:14.58px;top:47.14px;width:26.857px;-webkit-mask-image:url('assets/floating-banner-mask.svg');mask-image:url('assets/floating-banner-mask.svg');mask-mode:alpha;mask-repeat:no-repeat;mask-position:-14.578px -47.137px;mask-size:144px 56px;">
+                        <div style="position:absolute;top:-50.67%;right:-3.35%;bottom:-50.67%;left:-3.35%;">
+                          <img alt="" src="assets/floating-banner-ellipse.svg" style="display:block;width:100%;height:100%;max-width:none;">
+                        </div>
+                      </div>
+                      <!-- 화이트1: 브랜드 상품 이미지 50.4×50.4 -->
+                      <div style="position:absolute;left:calc(50% - 44px);top:calc(50% + 1px);transform:translate(-50%,-50%);width:50.4px;height:50.4px;-webkit-mask-image:url('assets/floating-banner-mask.svg');mask-image:url('assets/floating-banner-mask.svg');mask-mode:alpha;mask-repeat:no-repeat;mask-position:-2.8px -3.8px;mask-size:144px 56px;">
+                        <img alt="드리미" src="assets/floating-brand-product-dreame.png" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;">
+                      </div>
+                      <!-- 문구: left:56px top:50%+0.15px w:72px -->
+                      <div style="position:absolute;left:56px;top:calc(50% + 0.15px);transform:translateY(-50%);width:72px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;justify-content:center;-webkit-mask-image:url('assets/floating-banner-mask.svg');mask-image:url('assets/floating-banner-mask.svg');mask-mode:alpha;mask-repeat:no-repeat;mask-position:-56px -15px;mask-size:144px 56px;">
+                        <!-- 드리미 로고 이미지: 73.065×9.297px -->
+                        <div style="position:relative;flex-shrink:0;width:73.065px;height:9.297px;">
+                          <img alt="드리미" src="assets/floating-brand-logo-dreame.png" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;">
+                        </div>
+                        <!-- 브랜드명 텍스트 -->
+                        <div style="display:flex;align-items:center;padding-top:1px;flex-shrink:0;">
+                          <p style="font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:500;line-height:12px;color:white;letter-spacing:-0.12px;white-space:nowrap;margin:0;">드리미</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tabbar-bottom" style="position:relative;">
+
+                <!-- iOS_Tabbar/customHomeButton (node 24086:3811) — Figma 원본 구조 -->
+                <div style="position:absolute;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:8px;overflow:clip;z-index:1;">
+                  <!-- @@그림자배경 (node I24086:3811;23894:12101) -->
+                  <div style="position:absolute;top:17.95%;right:16.67%;bottom:16.67%;left:16.67%;background:#BBBBBB;filter:blur(4.077px);opacity:0.8;border-radius:24px;" aria-hidden="true"></div>
+                  <!-- icon circle (node I24086:3811;23894:12100): left:10px top:8px 52×52 overflow:clip -->
+                  <button aria-label="홈" style="position:absolute;left:10px;top:8px;width:52px;height:52px;border-radius:100px;background:linear-gradient(135deg,rgb(255,90,46) 0%,rgb(255,0,56) 51.96%,rgb(255,0,239) 100%);border:none;padding:0;cursor:pointer;overflow:clip;">
+                    <!-- img wrapper (node I24086:3811;23894:12742): left:0 top:0 52×52 radius:100px -->
+                    <div style="position:absolute;left:0;top:0;width:52px;height:52px;border-radius:100px;">
+                      <!-- logo (node I24086:3811;23894:12153): left:50% translateX(-50%) top:18px w:26px h:27.178px -->
+                      <div style="position:absolute;left:50%;transform:translateX(-50%);top:18px;width:26px;height:27.178px;">
+                        <img alt="11번가 홈" src="assets/ic-custom-home-logo.svg" style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;">
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- sidebar: ic_gnb_back (←), px=20 -->
+                <div class="tab-item" style="padding:10px 20px;"><div class="fig-icon"><div class="fi-back"><div class="fi-back-p1"><div style="position:absolute;inset:-5.36% -10.71%"><img alt="" src="assets/ic-back-p1.svg" style="width:100%;height:100%;"></div></div><div class="fi-back-p2"><div style="position:absolute;inset:-0.75px -3.75%"><img alt="" src="assets/ic-back-p2.svg" style="width:100%;height:100%;"></div></div></div></div></div>
+                <!-- search: px=20 -->
+                <div class="tab-item" style="padding:10px 20px;"><div class="fig-icon"><div class="fi-search"><img alt="" src="assets/ic-search.svg"></div></div></div>
+                <div style="flex:0 0 52px;"></div>
+                <div class="tab-item"><div class="fig-icon"><div class="fi-mypage"><img alt="" src="assets/ic-mypage.svg"></div></div></div>
+                <div class="tab-item">
+                  <div class="fig-icon"><div class="fi-talk"><div style="position:absolute;inset:-3.95%"><img alt="" src="assets/ic-talk.svg" style="width:100%;height:100%;"></div></div></div>
+                </div>
+              </div>
+              <div class="home-indicator"><div class="home-indicator-bar"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /variant-grid -->
+
+      <!-- Props 코드 예시 -->
+      <div class="component-code" style="border-radius:12px;overflow:hidden;margin-top:24px;">
+        <pre><span class="cmt">// TabBar 컴포넌트 사용 예시 (React + TypeScript)</span>
+<span class="kw">import</span> { TabBar } <span class="kw">from</span> <span class="str">'./components'</span>;
+
+<span class="cmt">// 홈 탭바</span>
+&lt;<span class="prop">TabBar</span>
+  <span class="val">type</span>=<span class="str">"Home"</span>
+  <span class="val">activeTab</span>=<span class="str">"home"</span>
+  <span class="val">talkCount</span>={<span class="val">88</span>}
+  <span class="val">onTabChange</span>={(tab) =&gt; setActiveTab(tab)}
+/&gt;
+
+<span class="cmt">// 서브 탭바 (7탭)</span>
+&lt;<span class="prop">TabBar</span> <span class="val">type</span>=<span class="str">"Sub"</span> <span class="val">activeTab</span>=<span class="str">"mypage"</span> <span class="val">onTabChange</span>={handleTabChange} /&gt;
+
+<span class="cmt">// MW 탭바 (홈인디케이터 없음)</span>
+&lt;<span class="prop">TabBar</span> <span class="val">type</span>=<span class="str">"Mw"</span> <span class="val">activeTab</span>=<span class="str">"home"</span> /&gt;
+
+<span class="cmt">// 커스텀 홈바 (플로팅 브랜드 배너)</span>
+&lt;<span class="prop">TabBar</span> <span class="val">type</span>=<span class="str">"customHomebar"</span> <span class="val">activeTab</span>=<span class="str">"home"</span> <span class="val">talkCount</span>={<span class="val">3</span>} /&gt;</pre>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TOKEN REFERENCE
+    ========================================================= -->
+    <section id="tokens" class="ds-section">
+      <h2 class="ds-section-title">토큰 레퍼런스 <span class="badge">Reference</span></h2>
+      <p class="ds-section-desc">
+        <code style="font-family:monospace;font-size:13px;background:var(--color-gray-12);padding:1px 6px;border-radius:4px;">tokens/theme.css</code>에 정의된 전체 CSS 변수 목록입니다.
+      </p>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">색상 변수</div>
+        <table class="token-table">
+          <thead><tr><th>변수명</th><th>값</th><th>미리보기</th></tr></thead>
+          <tbody id="color-token-table"></tbody>
+        </table>
+      </div>
+
+      <div class="ds-subsection" style="margin-top:32px;">
+        <div class="ds-subsection-title">Font Family 변수</div>
+        <table class="token-table">
+          <thead><tr><th>변수명</th><th>값</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">--font-family-pretendard</span></td><td style="font-size:13px;">"Pretendard", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-roboto</span></td><td style="font-size:13px;">"Roboto", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-noto-sans-kr</span></td><td style="font-size:13px;">"Noto Sans CJK KR", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-ios-default</span></td><td style="font-size:13px;">"Apple SD Gothic Neo", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-sf-pro</span></td><td style="font-size:13px;">"SF Pro Display", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-11gothic</span></td><td style="font-size:13px;">"11Street Gothic-Kor OTF", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-inter</span></td><td style="font-size:13px;">"Inter", sans-serif</td></tr>
+            <tr><td><span class="mono">--font-family-outfit</span></td><td style="font-size:13px;">"Outfit", sans-serif</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // =============================================
+  // Color Token Table (auto-generated)
+  // =============================================
+  const colorTokens = [
+    ['--color-primary-red',              '#FF0038'],
+    ['--color-primary-amazon-bluegreen', '#49A3C7'],
+    ['--color-primary-t-blue',           '#3617CE'],
+    ['--color-primary-ooah-blue',        '#0F0FD9'],
+    ['--color-primary-freshtable-mint',  '#00B4A5'],
+    ['--color-primary-beautyclub-purple','#8800DC'],
+    ['--color-primary-familyplus-pink',  '#FF65AE'],
+    ['--color-primary-martplus-orange',  '#FF7700'],
+    ['--color-brand-refurbly-blue',      '#5274FF'],
+    ['--color-secondary-blue',           '#0B83E6'],
+    ['--color-secondary-yellow',         '#FFA700'],
+    ['--color-secondary-green',          '#249356'],
+    ['--color-gray-01', '#000000'], ['--color-gray-02', '#111111'],
+    ['--color-gray-03', '#333333'], ['--color-gray-04', '#666666'],
+    ['--color-gray-05', '#777777'], ['--color-gray-06', '#949494'],
+    ['--color-gray-07', '#999999'], ['--color-gray-08', '#BBBBBB'],
+    ['--color-gray-09', '#CCCCCC'], ['--color-gray-10', '#DDDDDD'],
+    ['--color-gray-11', '#EEEEEE'], ['--color-gray-12', '#F4F4F4'],
+    ['--color-gray-13', '#FAFAFA'], ['--color-gray-14', '#FFFFFF'],
+    ['--color-dimmed-img', '#434A79'],
+    ['--color-dimmed-all', '#000000'],
+  ];
+
+  const tbody = document.getElementById('color-token-table');
+  colorTokens.forEach(([varName, hex]) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="mono">${varName}</span></td>
+      <td style="font-family:monospace;font-size:12px;color:#888;">${hex}</td>
+      <td>
+        <div style="width:32px;height:32px;border-radius:6px;background:var(${varName});
+             border:1px solid rgba(0,0,0,0.08);box-shadow:0 1px 4px rgba(0,0,0,.06);">
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  // =============================================
+  // Sidebar active state on scroll
+  // =============================================
+  const sections = document.querySelectorAll('.ds-section');
+  const navLinks = document.querySelectorAll('.ds-sidebar a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // =============================================
+  // Swatch click to copy CSS var
+  // =============================================
+  document.querySelectorAll('.color-swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      const varName = swatch.querySelector('.swatch-var')?.textContent;
+      if (varName) {
+        navigator.clipboard.writeText(`var(${varName})`).then(() => {
+          const chip = swatch.querySelector('.swatch-chip');
+          const orig = chip.style.outline;
+          chip.style.outline = '3px solid var(--color-secondary-blue)';
+          setTimeout(() => chip.style.outline = orig, 800);
+        });
+      }
+    });
+    swatch.title = '클릭하면 CSS 변수 복사';
+  });
+</script>
+</body>
+</html>

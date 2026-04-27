@@ -1,0 +1,215 @@
+/* =============================================================================
+   Design System Tokens — generated from Figma variables
+   Color: 24333:735 / Typography: 24333:742
+   ============================================================================= */
+
+:root {
+
+  /* ---------------------------------------------------------------------------
+     COLOR TOKENS
+     --------------------------------------------------------------------------- */
+
+  /* Brand Primary */
+  --color-primary-red:              #FF0038;
+  --color-primary-amazon-bluegreen: #49A3C7;
+  --color-primary-t-blue:           #3617CE;
+  --color-primary-ooah-blue:        #0F0FD9;
+  --color-primary-freshtable-mint:  #00B4A5;
+  --color-primary-beautyclub-purple:#8800DC;
+  --color-primary-familyplus-pink:  #FF65AE;
+  --color-primary-martplus-orange:  #FF7700;
+
+  /* Brand Extended */
+  --color-brand-refurbly-blue:      #5274FF;
+
+  /* Secondary */
+  --color-secondary-blue:           #0B83E6;
+  --color-secondary-yellow:         #FFA700;
+  --color-secondary-green:          #249356;
+
+  /* Grayscale */
+  --color-gray-01: #000000;
+  --color-gray-02: #111111;
+  --color-gray-03: #333333;
+  --color-gray-04: #666666;
+  --color-gray-05: #777777;
+  --color-gray-06: #949494;
+  --color-gray-07: #999999;
+  --color-gray-08: #BBBBBB;
+  --color-gray-09: #CCCCCC;
+  --color-gray-10: #DDDDDD;
+  --color-gray-11: #EEEEEE;
+  --color-gray-12: #F4F4F4;
+  --color-gray-13: #FAFAFA;
+  --color-gray-14: #FFFFFF;
+
+  /* Dimmed / Overlay */
+  --color-dimmed-img: #434A79;
+  --color-dimmed-all: #000000;
+
+  /* ---------------------------------------------------------------------------
+     FONT FAMILY TOKENS
+     --------------------------------------------------------------------------- */
+
+  --font-family-pretendard:  "Pretendard", sans-serif;
+  --font-family-roboto:      "Roboto", sans-serif;
+  --font-family-noto-sans-kr:"Noto Sans CJK KR", sans-serif;
+  --font-family-ios-default: "Apple SD Gothic Neo", sans-serif;
+  --font-family-sf-pro:      "SF Pro Display", sans-serif;
+  --font-family-11gothic:    "11Street Gothic-Kor OTF", sans-serif;
+  --font-family-inter:       "Inter", sans-serif;
+  --font-family-outfit:      "Outfit", sans-serif;
+
+  /* ---------------------------------------------------------------------------
+     FONT WEIGHT TOKENS
+     --------------------------------------------------------------------------- */
+
+  --font-weight-light:   300;
+  --font-weight-regular: 400;
+  --font-weight-medium:  500;
+  --font-weight-bold:    700;
+
+  /* ---------------------------------------------------------------------------
+     FONT SIZE TOKENS  (Common / Pretendard)
+     --------------------------------------------------------------------------- */
+
+  --font-size-ds-title-1: 48px;
+
+  /* Headline */
+  --font-size-headline-1: 32px;
+  --font-size-headline-2: 28px;
+  --font-size-headline-3: 27px;
+  --font-size-headline-4: 26px;
+  --font-size-headline-5: 25px;
+  --font-size-headline-6: 24px;
+  --font-size-headline-7: 23px;
+  --font-size-headline-8: 22px;
+  --font-size-headline-9: 21px;
+
+  /* Title */
+  --font-size-title-1: 20px;
+  --font-size-title-2: 20px;
+  --font-size-title-3: 19px;
+  --font-size-title-4: 19px;
+
+  /* Subtitle */
+  --font-size-subtitle-1: 18px;
+  --font-size-subtitle-2: 18px;
+  --font-size-subtitle-3: 17px;
+  --font-size-subtitle-4: 17px;
+  --font-size-subtitle-5: 16px;
+  --font-size-subtitle-6: 16px;
+
+  /* Body */
+  --font-size-body-1: 15px;
+  --font-size-body-2: 15px;
+  --font-size-body-3: 14px;
+  --font-size-body-4: 14px;
+
+  /* Caption */
+  --font-size-caption-1: 13px;
+  --font-size-caption-2: 13px;
+  --font-size-caption-3: 12px;
+  --font-size-caption-4: 12px;
+  --font-size-caption-5: 11px;
+  --font-size-caption-6: 11px;
+  --font-size-caption-7: 10px;
+  --font-size-caption-8: 10px;
+
+  /* ---------------------------------------------------------------------------
+     LINE HEIGHT TOKENS  (Common / Pretendard)
+     --------------------------------------------------------------------------- */
+
+  --line-height-ds-title-1: 56px;
+
+  /* Headline */
+  --line-height-headline-1: 38px;
+  --line-height-headline-2: 33px;
+  --line-height-headline-3: 32px;
+  --line-height-headline-4: 31px;
+  --line-height-headline-5: 30px;
+  --line-height-headline-6: 29px;
+  --line-height-headline-7: 27px;
+  --line-height-headline-8: 27px;
+  --line-height-headline-9: 25px;
+
+  /* Title */
+  --line-height-title-1: 24px;
+  --line-height-title-2: 24px;
+  --line-height-title-3: 24px;
+  --line-height-title-4: 24px;
+
+  /* Subtitle */
+  --line-height-subtitle-1:         21px;
+  --line-height-subtitle-1-relaxed: 24px;
+  --line-height-subtitle-2:         21px;
+  --line-height-subtitle-2-relaxed: 24px;
+  --line-height-subtitle-3:         20px;
+  --line-height-subtitle-3-relaxed: 22px;
+  --line-height-subtitle-4:         20px;
+  --line-height-subtitle-4-relaxed: 22px;
+  --line-height-subtitle-5:         20px;
+  --line-height-subtitle-6:         20px;
+
+  /* Body */
+  --line-height-body-1:         18px;
+  --line-height-body-1-relaxed: 20px;
+  --line-height-body-2:         18px;
+  --line-height-body-2-relaxed: 20px;
+  --line-height-body-3:         18px;
+  --line-height-body-3-relaxed: 20px;
+  --line-height-body-4:         18px;
+  --line-height-body-4-relaxed: 20px;
+
+  /* Caption */
+  --line-height-caption-1:         16px;
+  --line-height-caption-1-relaxed: 18px;
+  --line-height-caption-2:         16px;
+  --line-height-caption-2-relaxed: 18px;
+  --line-height-caption-3:         14px;
+  --line-height-caption-3-relaxed: 16px;
+  --line-height-caption-4:         14px;
+  --line-height-caption-4-relaxed: 16px;
+  --line-height-caption-5:         13px;
+  --line-height-caption-5-relaxed: 16px;
+  --line-height-caption-5-compact: 12px;
+  --line-height-caption-6:         13px;
+  --line-height-caption-6-relaxed: 16px;
+  --line-height-caption-6-compact: 12px;
+  --line-height-caption-7:         12px;
+  --line-height-caption-8:         12px;
+
+  /* ---------------------------------------------------------------------------
+     ANDROID FONT SIZE TOKENS  (Roboto / Noto Sans CJK KR)
+     --------------------------------------------------------------------------- */
+
+  --font-size-and-headline-0: 28px;
+  --font-size-and-headline-1: 24px;
+  --font-size-and-headline-2: 22px;
+  --font-size-and-headline-3: 20px;
+  --font-size-and-title-bold:    18px;
+  --font-size-and-title-regular: 18px;
+  --font-size-and-subtitle-1: 16px;
+  --font-size-and-subtitle-2: 15px;
+  --font-size-and-body-1:     14px;
+  --font-size-and-body-2:     13px;
+  --font-size-and-caption-1:  12px;
+  --font-size-and-caption-2:  11px;
+
+  /* ---------------------------------------------------------------------------
+     iOS FONT SIZE TOKENS  (SF Pro Display / Apple SD Gothic Neo)
+     --------------------------------------------------------------------------- */
+
+  --font-size-ios-headline-0:    29px;
+  --font-size-ios-headline-1:    25px;
+  --font-size-ios-headline-2:    23px;
+  --font-size-ios-headline-3:    21px;
+  --font-size-ios-title-bold:    19px;
+  --font-size-ios-title-regular: 19px;
+  --font-size-ios-subtitle-1:    17px;
+  --font-size-ios-subtitle-2:    16px;
+  --font-size-ios-body-1:        15px;
+  --font-size-ios-body-2:        14px;
+  --font-size-ios-caption-1:     13px;
+  --font-size-ios-caption-2:     12px;
+}
