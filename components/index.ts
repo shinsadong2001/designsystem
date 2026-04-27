@@ -13,3 +13,14 @@ export type { GNBProps, GNBType, GNBSubType } from './GNB';
 
 export { TabBar } from './TabBar';
 export type { TabBarProps, TabBarType, TabKey } from './TabBar';
+
+export { GridScrollImgTextCircleBox, IconBrand, IconService } from './GridScroll_ImgText_CircleBox';
+export type {
+  GridScrollImgTextCircleBoxProps,
+  GridItem,
+  GridItemKind,
+  IconBrandProps,
+  BrandIconType,
+  IconServiceProps,
+  ServiceIconType,
+} from './GridScroll_ImgText_CircleBox';
