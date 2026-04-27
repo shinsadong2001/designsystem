@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11ST 홈 프로토타입</title>
+  <link rel="stylesheet" href="tokens/theme.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #c8ccd4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 0 80px;
+      font-family: var(--font-family-pretendard, 'Pretendard', sans-serif);
+    }
+
+    /* ── 상단 라벨 ─────────────────────── */
+    .proto-label {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .proto-label h1 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .proto-label p {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    /* ── 디바이스 프레임 ───────────────── */
+    .device {
+      width: 375px;
+      height: 812px;
+      position: relative;
+      border-radius: 50px;
+      background: white;
+      box-shadow:
+        0 0 0 2px #888,
+        0 0 0 10px #1a1a1a,
+        0 0 0 12px #333,
+        0 30px 80px rgba(0,0,0,0.45),
+        0 8px 20px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    /* ── 내부 스크롤 컨테이너 ─────────── */
+    .device-scroll {
+      width: 375px;
+      height: 812px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      position: relative;
+    }
+    .device-scroll::-webkit-scrollbar { display: none; }
+
+    /* ── 스티키 헤더 ──────────────────── */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: white;
+    }
+
+    /* ── 고정 탭바 ────────────────────── */
+    .tabbar-fixed {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 375px;
+      z-index: 100;
+      overflow: clip;
+    }
+
+    /* ── 스크롤 내 탭 (가로) ──────────── */
+    .htabs { scrollbar-width: none; }
+    .htabs::-webkit-scrollbar { display: none; }
+    .hrow { scrollbar-width: none; }
+    .hrow::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- 프로토타입 라벨 -->
+<div class="proto-label">
+  <h1>11ST Design System</h1>
+  <p>Home Prototype · 375 × 812 · Figma 원본 기반</p>
+</div>
+
+<div class="device">
+  <!-- ══════════════════════════════════
+       스크롤 컨테이너
+  ══════════════════════════════════ -->
+  <div class="device-scroll">
+
+    <!-- ┌──────────────────────────────┐
+         │  STICKY HEADER               │
+         └──────────────────────────────┘ -->
+    <div class="sticky-header">
+
+      <!-- Status Bar (44px) -->
+      <div style="background:white;height:44px;display:flex;align-items:center;justify-content:space-between;padding:14px 26px 12px 27px;">
+        <span style="font-family:'SF Pro Text',sans-serif;font-size:16px;font-weight:600;color:#000;letter-spacing:-0.408px;line-height:22px;">11:11</span>
+        <img src="http://localhost:3845/assets/def9d348047d377e2319c46986f0b93674a54073.svg"
+          style="height:13px;width:78.261px;display:block;max-width:none;" alt="">
+      </div>
+
+      <!-- GNB Home (44px) -->
+      <div style="background:white;height:44px;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;">
+        <div style="display:flex;gap:8px;align-items:center;isolation:isolate;">
+          <!-- 11번가 로고 -->
+          <div style="height:24px;width:56px;position:relative;z-index:2;flex-shrink:0;">
+            <div style="position:absolute;inset:0 0.14% 0 0;">
+              <img src="http://localhost:3845/assets/47cd4f04d6b8dbaac64d5513460961d6e41efeec.svg"
+                style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+            </div>
+          </div>
+          <!-- 펼침 -->
+          <div style="width:18px;height:18px;position:relative;flex-shrink:0;z-index:1;">
+            <img src="http://localhost:3845/assets/21b8198fc310409ffb06a8d68c705d36aedcfc99.svg"
+              style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;position:relative;">
+          <!-- 장바구니 -->
+          <div style="width:36px;height:36px;position:relative;overflow:clip;">
+            <div style="position:absolute;top:17.36%;right:18.24%;bottom:17.36%;left:11.81%;">
+              <img src="http://localhost:3845/assets/46d073e651d5c6bf6f54ac91a0eba05224dec1dc.svg"
+                style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+            </div>
+          </div>
+          <!-- 숫자 뱃지 -->
+          <div style="position:absolute;left:22px;top:-3px;background:#FF0038;border-radius:100px;height:16px;padding:2px 4.5px;display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:'SF Pro Text',sans-serif;font-size:11px;color:white;line-height:12px;white-space:nowrap;">3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Area (46px) -->
+      <div style="background:white;height:46px;overflow:clip;position:relative;">
+        <div style="position:absolute;background:#FAFAFA;border:1px solid #DDDDDD;height:38px;left:16px;border-radius:100px;top:0;width:343px;display:flex;align-items:center;overflow:clip;">
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 38px 0 16px;overflow:hidden;">
+            <p style="font-size:14px;color:#333;line-height:14px;white-space:nowrap;">
+              오늘의 브랜드&nbsp;<span style="font-weight:700;color:#14299F;">삼성전자</span>
+            </p>
+          </div>
+          <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);width:30px;height:30px;flex-shrink:0;">
+            <img src="http://localhost:3845/assets/f847036e065fa20ede68ba5b56867c58ce6ffd61.svg"
+              style="display:block;width:100%;height:100%;max-width:none;" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Tabs (44px) -->
+      <div style="background:white;border-bottom:1px solid rgba(0,0,0,0.1);height:44px;overflow:clip;position:relative;">
+        <div class="htabs" style="display:flex;height:44px;align-items:flex-start;padding-left:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+          <!-- 홈 active -->
+          <div style="border-bottom:2px solid #FF0038;height:100%;display:flex;flex-direction:column;justify-content:center;padding-bottom:2px;flex-shrink:0;">
+            <div style="padding:0 4px;">
+              <span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:17px;color:#FF0038;line-height:20px;white-space:nowrap;">홈</span>
+            </div>
+          </div>
+          <!-- 오늘발견 -->
+          <div style="height:100%;display:flex;flex-direction:column;justify-content:center;padding-bottom:2px;flex-shrink:0;">
+            <div style="padding:0 4px;display:flex;align-items:flex-start;">
+              <span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:17px;color:#111;line-height:20px;white-space:nowrap;">오늘발견</span>
+              <div style="width:4px;height:4px;position:relative;flex-shrink:0;margin-top:3px;">
+                <img src="http://localhost:3845/assets/cbc28aa2d78733a50d57c4f505d6f97d36e7b81f.svg"
+                  style="display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+          </div>
+          <!-- 베스트 -->
+          <div style="height:100%;display:flex;flex-direction:column;justify-content:center;padding-bottom:2px;flex-shrink:0;">
+            <div style="padding:0 4px;"><span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:17px;color:#111;line-height:20px;white-space:nowrap;">베스트</span></div>
+          </div>
+          <!-- 마트+ -->
+          <div style="height:100%;display:flex;flex-direction:column;justify-content:center;padding-bottom:2px;flex-shrink:0;">
+            <div style="padding:0 4px;"><span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:17px;color:#111;line-height:20px;white-space:nowrap;">마트+</span></div>
+          </div>
+          <!-- MD픽 -->
+          <div style="height:100%;display:flex;flex-direction:column;justify-content:center;padding-bottom:2px;flex-shrink:0;">
+            <div style="padding:0 4px;"><span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:17px;color:#111;line-height:20px;white-space:nowrap;">MD픽</span></div>
+          </div>
+          <!-- T멤버십 -->
+          <div style="height:100%;display:flex;flex-direction:column;justify-content:center;padding-bottom:2px;flex-shrink:0;">
+            <div style="padding:0 4px;"><span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:17px;color:#111;line-height:20px;white-space:nowrap;">T멤버십</span></div>
+          </div>
+        </div>
+        <!-- 오른쪽 그라디언트 + 탭 오픈 버튼 -->
+        <div style="position:absolute;top:0;right:0;height:44px;display:flex;align-items:center;pointer-events:none;">
+          <div style="width:48px;height:44px;background:linear-gradient(to right,rgba(255,255,255,0),white);"></div>
+          <div style="background:white;height:44px;display:flex;align-items:center;padding-right:4px;pointer-events:all;">
+            <div style="width:32px;height:32px;position:relative;">
+              <img src="http://localhost:3845/assets/aa86515056d409436414dc80254e235c1c9a7690.svg"
+                style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sticky-header -->
+
+    <!-- ┌──────────────────────────────┐
+         │  SCROLLABLE CONTENT          │
+         └──────────────────────────────┘ -->
+    <div style="padding-bottom:106px;">
+
+      <!-- ▶ Billboard (188px) -->
+      <div style="height:188px;overflow:clip;position:relative;flex-shrink:0;">
+        <img src="http://localhost:3845/assets/0573dd77c7b1317cc92aa20c559fe445e15b89c2.png"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+        <!-- 카운터 뱃지 -->
+        <div style="position:absolute;background:rgba(0,0,0,0.4);bottom:12px;right:12px;border-radius:100px;padding:6px 10px 6px 8px;display:flex;gap:2px;align-items:center;">
+          <span style="font-size:13px;color:white;line-height:16px;width:18px;text-align:right;">08</span>
+          <div style="height:11.896px;width:4.094px;position:relative;flex-shrink:0;">
+            <img src="http://localhost:3845/assets/1c0fc505265535e75fe12fb2f8587b5b67df9b28.svg"
+              style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+          </div>
+          <span style="font-size:13px;color:rgba(255,255,255,0.7);line-height:16px;width:18px;">39</span>
+          <div style="width:8px;height:8px;position:relative;flex-shrink:0;">
+            <img src="http://localhost:3845/assets/7986a0f23aadecda9580979073acc1e75509eeec.svg"
+              style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- ▶ 구분선 (8px) + 키워드 랭킹 -->
+      <div style="background:#EEEEEE;height:8px;"></div>
+      <div style="background:white;display:flex;align-items:center;padding:12px 16px;width:375px;">
+        <!-- 실시간 쇼검 라벨 -->
+        <div style="padding:4px 5px;background:linear-gradient(161.003deg,rgb(255,90,46) 0%,rgb(255,0,56) 51.96%,rgb(255,0,239) 100%);flex-shrink:0;">
+          <span style="font-family:'11Street Gothic-Kor OTF',sans-serif;font-size:11px;color:white;line-height:13px;white-space:nowrap;">실시간 쇼검</span>
+        </div>
+        <!-- 콘텐츠 -->
+        <div style="flex:1;min-width:0;padding-left:12px;padding-right:3px;display:flex;align-items:center;">
+          <div style="flex:1;min-width:0;display:flex;gap:8px;align-items:center;">
+            <span style="font-family:'SF Pro Text',sans-serif;font-style:italic;font-weight:700;font-size:15px;color:#FF0038;line-height:18px;flex-shrink:0;">1</span>
+            <span style="font-size:16px;color:#111;line-height:20px;flex-shrink:0;">송혜교 귀걸이</span>
+          </div>
+          <!-- 상승 아이콘 -->
+          <div style="width:8px;height:10px;overflow:clip;position:relative;flex-shrink:0;margin-right:4px;">
+            <img src="http://localhost:3845/assets/6394b24e5206196461be8a8bd73580c8a7c7aaef.svg"
+              style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+            <img src="http://localhost:3845/assets/d85f92cc8df20e1a13242dbf63066304230be7ed.svg"
+              style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+          </div>
+        </div>
+        <!-- 더보기 화살표 -->
+        <div style="width:24px;height:24px;position:relative;flex-shrink:0;">
+          <div style="position:absolute;top:37.5%;right:25%;bottom:37.5%;left:25%;">
+            <div style="position:absolute;inset:-8.33% -4.17%;">
+              <img src="http://localhost:3845/assets/0e895c47d31c854ba1c3f4edbca989d17c53b15e.svg"
+                style="display:block;width:100%;height:100%;max-width:none;" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ▶ 전광판 영역 -->
+      <div style="background:white;">
+
+        <!-- 전광판 배경 + 텍스트 (120px) -->
+        <div style="background:white;height:120px;overflow:clip;position:relative;width:375px;">
+          <div style="position:absolute;left:50%;transform:translateX(-50%);width:300px;height:120px;overflow:clip;top:0;">
+            <!-- Ellipse 배경 -->
+            <div style="position:absolute;height:76.888px;left:18.56px;top:17.11px;width:262.477px;">
+              <div style="position:absolute;inset:-65.03% -19.05%;">
+                <img src="http://localhost:3845/assets/539da0e2ed1439bd370676360b082571263bf4cf.svg"
+                  style="display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+            <!-- 오른쪽 캐릭터 (opacity 70%) -->
+            <div style="position:absolute;height:40px;left:255px;opacity:0.7;top:56px;width:40.315px;overflow:hidden;">
+              <img src="http://localhost:3845/assets/1307ca55c7630520b3a66228c9f4bba302cb82b1.png"
+                style="position:absolute;height:115.06%;left:0;top:0;width:114.16%;max-width:none;" alt="">
+            </div>
+            <!-- 왼쪽 회전 캐릭터 -->
+            <div style="position:absolute;left:-1.85px;top:16.65px;width:69.47px;height:69.47px;display:flex;align-items:center;justify-content:center;">
+              <div style="transform:rotate(-20.46deg);">
+                <div style="width:54px;height:54px;position:relative;overflow:hidden;">
+                  <img src="http://localhost:3845/assets/622e5b7b418aec9def6e6bc40e8f40957fa563eb.png"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+                </div>
+              </div>
+            </div>
+            <!-- 오른쪽 마스크 캐릭터 -->
+            <div style="position:absolute;left:205.52px;top:-45.48px;width:89.812px;height:89.812px;display:flex;align-items:center;justify-content:center;">
+              <div style="transform:scaleY(-1) rotate(161.27deg);">
+                <div style="width:70.821px;height:70.821px;position:relative;opacity:0.9;
+                  -webkit-mask-image:url('http://localhost:3845/assets/aee569fa4d4afa3d12799078d7801248de7b68d9.svg');
+                  mask-image:url('http://localhost:3845/assets/aee569fa4d4afa3d12799078d7801248de7b68d9.svg');
+                  -webkit-mask-mode:alpha;mask-mode:alpha;
+                  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+                  -webkit-mask-position:-17.518px 22.483px;mask-position:-17.518px 22.483px;
+                  -webkit-mask-size:122px 58px;mask-size:122px 58px;">
+                  <img src="http://localhost:3845/assets/fd57ab9e2b44fc806a31aea691330b6fc3f74814.png"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+                </div>
+              </div>
+            </div>
+            <!-- 그랜드십일절 텍스트 이미지 -->
+            <div style="position:absolute;top:34.07px;left:0;width:300px;height:86px;">
+              <!-- 오른쪽 파트: left:49% right:25% top:28.39% bottom:38.59% -->
+              <div style="position:absolute;left:49%;right:25%;top:28.39%;bottom:38.59%;">
+                <img src="http://localhost:3845/assets/b5a39919c98fa4fbc19ef29df18779d3b0dcb107.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+              <!-- 왼쪽 파트: left:25% right:51.95% top:29.51% bottom:38.39% -->
+              <div style="position:absolute;left:25%;right:51.95%;top:29.51%;bottom:38.39%;">
+                <img src="http://localhost:3845/assets/a33eb2deb35afaea0d9fd38d07d5628423f060a6.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+            <!-- 문구: 선착순! 8천원 쿠폰 추가 지급 -->
+            <div style="position:absolute;left:50%;top:85px;transform:translateX(-50%);width:236px;height:18px;display:flex;gap:4px;align-items:center;justify-content:center;padding-left:10px;">
+              <span style="font-weight:700;font-size:13px;color:#111;line-height:16px;white-space:nowrap;flex-shrink:0;">선착순! 8천원 쿠폰 추가 지급</span>
+              <div style="background:rgba(0,0,0,0.2);border-radius:100px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <div style="height:7px;width:3px;position:relative;">
+                  <div style="position:absolute;inset:-10.71% -41.67% -10.71% -8.33%;">
+                    <img src="http://localhost:3845/assets/a2f08f3e225ea9922c6db0f97b7e3ccfbf574a38.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ▶ GridScroll_ImgText_CircleBox -->
+        <div style="background:white;display:flex;flex-direction:column;gap:12px;padding:18px 0;width:375px;overflow:clip;">
+
+          <!-- Row 1 — 브랜드 -->
+          <div class="hrow" style="display:flex;align-items:flex-start;height:74px;padding:0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+
+            <!-- 취향발견 (패션뷰티) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#000;overflow:hidden;flex-shrink:0;">
+                <div style="position:absolute;top:26.54%;right:29.29%;bottom:51.76%;left:28.43%;">
+                  <img src="http://localhost:3845/assets/8aee1ac3a6e2efede4c2b6f3584dd701e37672ac.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;top:51.71%;right:30.25%;bottom:26.29%;left:27.64%;">
+                  <img src="http://localhost:3845/assets/94b2d99f927752d949af9cf6ef876ceb7a455e02.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;white-space:nowrap;flex-shrink:0;">취향발견</span>
+            </div>
+
+            <!-- 무료멤버십 (11번가플러스) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:linear-gradient(135deg,rgb(255,90,46) 0%,rgb(255,0,56) 51.96%,rgb(255,0,239) 100%);overflow:hidden;flex-shrink:0;">
+                <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:31.625px;height:23px;border-radius:8px;">
+                  <img src="http://localhost:3845/assets/1fe7b22e4bbb5fe4d5b078430c90c66342df2411.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;white-space:nowrap;flex-shrink:0;">무료멤버십</span>
+            </div>
+
+            <!-- 슈팅배송 (마트플러스) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:linear-gradient(134.983deg,rgb(255,143,41) 0%,rgb(255,122,0) 55.096%,rgb(240,101,0) 86.652%);overflow:hidden;flex-shrink:0;">
+                <div style="position:absolute;left:50%;top:27.88%;transform:translateX(-50%);width:32px;bottom:27.88%;">
+                  <img src="http://localhost:3845/assets/290c6f46a320d75c1599c8d0282e0553b570d037.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;white-space:nowrap;flex-shrink:0;">슈팅배송</span>
+            </div>
+
+            <!-- 머니한잔 (11키티즈) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#ffd2e8;overflow:hidden;flex-shrink:0;">
+                <div style="position:absolute;top:23.08%;right:26.08%;bottom:51.92%;left:25.85%;">
+                  <img src="http://localhost:3845/assets/650b5f9c203ea9a53c8fd64378db6e8c09c84d13.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;top:51.33%;right:71.97%;bottom:29.22%;left:14.56%;">
+                  <div style="position:absolute;inset:-6.85% -9.9%;">
+                    <img src="http://localhost:3845/assets/6a7b402201360cca19dd2336c8995adadea28694.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+                <div style="position:absolute;top:51.41%;right:53.02%;bottom:29.32%;left:30.71%;">
+                  <div style="position:absolute;inset:-6.92% -8.2%;">
+                    <img src="http://localhost:3845/assets/08e1c970362bc9c389f40b1fe670fc8e5f7a6670.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+                <div style="position:absolute;top:51.41%;right:34.8%;bottom:29.32%;left:48.67%;">
+                  <div style="position:absolute;inset:-6.92% -7.91% -6.92% -7.49%;">
+                    <img src="http://localhost:3845/assets/76ef1fd38c184d2f17b6f8b11c36eea3679837b7.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+                <div style="position:absolute;top:52.17%;right:15.7%;bottom:30.42%;left:66.93%;">
+                  <div style="position:absolute;inset:-7.65% -7.68%;">
+                    <img src="http://localhost:3845/assets/2730b214f8d25a59f4a72405059a489b7b90cc7d.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+                <div style="position:absolute;top:52.55%;right:29.02%;bottom:40.02%;left:31.85%;">
+                  <img src="http://localhost:3845/assets/526cc61d80f49f1273a9b371da2f793d446e7fc9.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;white-space:nowrap;flex-shrink:0;">머니한잔</span>
+            </div>
+
+            <!-- 11번가로또 (십일또) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#ff4588;overflow:hidden;flex-shrink:0;">
+                <div style="position:absolute;top:28.69%;right:27.09%;bottom:47.1%;left:24.13%;">
+                  <div style="position:absolute;inset:-6.36% -3.15%;">
+                    <img src="http://localhost:3845/assets/06b92390a9e9f27c933ba2a33ebcd438fd7d0977.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+                <div style="position:absolute;left:12.07px;top:27px;width:6px;height:6px;">
+                  <img src="http://localhost:3845/assets/4d3d3a873ba56b96ae308491fa718f2c363786f9.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;left:24.07px;top:21px;width:12px;height:12px;">
+                  <img src="http://localhost:3845/assets/ae08fab9721c678d80cc6f82706e232f570147f7.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;left:16.07px;top:22px;width:12px;height:12px;">
+                  <img src="http://localhost:3845/assets/ae08fab9721c678d80cc6f82706e232f570147f7.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <p style="position:absolute;left:50%;top:calc(50% - 3px);transform:translateX(-50%);font-size:11.5px;letter-spacing:-0.92px;white-space:nowrap;background:linear-gradient(180deg,white 20%,#ffe7f8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;">십일또</p>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;white-space:nowrap;flex-shrink:0;">11번가로또</span>
+            </div>
+
+            <!-- 우주패스 (슈팅배송 default) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:linear-gradient(135deg,rgb(255,90,46) 0%,rgb(255,0,56) 51.96%,rgb(255,0,239) 100%);overflow:hidden;flex-shrink:0;">
+                <div style="position:absolute;height:25px;left:9.85px;top:15.5px;width:28.295px;overflow:clip;">
+                  <div style="position:absolute;top:0;right:0.01%;bottom:2.85%;left:0;">
+                    <img src="http://localhost:3845/assets/8056ad9040434c0ec63b25a0f47857700f3f8a55.svg"
+                      style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;white-space:nowrap;flex-shrink:0;">우주패스</span>
+            </div>
+
+          </div><!-- /Row 1 -->
+
+          <!-- Row 2 — 서비스 -->
+          <div class="hrow" style="display:flex;align-items:flex-start;height:74px;padding:0 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+
+            <!-- 쿠폰/혜택 -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#F4F4F4;overflow:clip;flex-shrink:0;">
+                <div style="position:absolute;top:34.13%;right:23.08%;bottom:33.17%;left:23.08%;">
+                  <div style="position:absolute;inset:-20.59% -14.29% -26.47% -14.29%;">
+                    <img src="http://localhost:3845/assets/a6de1d897c46870ec246184f47a7aed51c070eea.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+                <div style="position:absolute;top:32.69%;right:23.08%;bottom:34.62%;left:23.08%;">
+                  <img src="http://localhost:3845/assets/7b6d7b943a347fbc8018f9f724dea1df67779037.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;top:42.31%;right:50.96%;bottom:43.27%;left:35.58%;">
+                  <img src="http://localhost:3845/assets/b2b781891c845c5d353dd2ecf80e6ebfd1baf944.svg"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;flex-shrink:0;">쿠폰/혜택</span>
+            </div>
+
+            <!-- 베스트랭킹 -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#F4F4F4;overflow:clip;flex-shrink:0;">
+                <div style="position:absolute;left:5px;top:5px;width:42px;height:42px;">
+                  <img src="http://localhost:3845/assets/f2dd6cfab6ec26aee68660ee269f6abcfabbf9fe.png"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;flex-shrink:0;">베스트랭킹</span>
+            </div>
+
+            <!-- 다이슨 (메가데이) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:linear-gradient(153.435deg,rgb(47,1,89) 15.385%,rgb(11,9,60) 84.295%);overflow:clip;flex-shrink:0;">
+                <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:28px;overflow:clip;width:29.373px;">
+                  <img src="http://localhost:3845/assets/ed1fef50ea9cf6d8127ba4cef07695c881456895.png"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;flex-shrink:0;">다이슨</span>
+            </div>
+
+            <!-- 헤라 (쇼핑초월) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#071959;overflow:clip;flex-shrink:0;">
+                <div style="position:absolute;inset:0;overflow:hidden;">
+                  <img src="http://localhost:3845/assets/5669e6bb2393c4c36e721d48fd397bf5660d0d33.png"
+                    style="position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;left:27px;top:30px;width:22px;height:22px;box-shadow:0 0 8px 0 #1d409a;">
+                  <img src="http://localhost:3845/assets/b57d98ad2106352d1ed7375596ac2f9c833bfb37.png"
+                    style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+                </div>
+                <div style="position:absolute;left:50%;top:calc(50% - 14px);transform:translateX(-50%);font-size:13px;letter-spacing:-0.5px;text-align:center;white-space:nowrap;-webkit-background-clip:text;background-clip:text;color:transparent;background-image:linear-gradient(234.462deg,rgb(79,252,255) 10.648%,rgb(255,255,255) 96.007%);">
+                  <p style="line-height:14px;margin-bottom:0;">쇼핑</p>
+                  <p style="line-height:14px;margin:0;">초월</p>
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;flex-shrink:0;">헤라</span>
+            </div>
+
+            <!-- 발렌타인데이 (케이크) -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#F4F4F4;overflow:clip;flex-shrink:0;">
+                <div style="position:absolute;top:25%;right:25%;bottom:26.56%;left:25%;overflow:hidden;">
+                  <img src="http://localhost:3845/assets/6065b10e7cf4bd2ba7634f1dd057f4443e6eab39.png"
+                    style="position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;flex-shrink:0;">발렌타인데이</span>
+            </div>
+
+            <!-- 반려동물 -->
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 8px;flex-shrink:0;width:68px;">
+              <div style="position:relative;width:52px;height:52px;border-radius:100px;background:#F4F4F4;overflow:clip;flex-shrink:0;">
+                <div style="position:absolute;top:23.08%;right:22.89%;bottom:23.08%;left:25%;overflow:hidden;">
+                  <img src="http://localhost:3845/assets/e05e1f83c1814d1bb459e44f3b6a45a36090b32d.png"
+                    style="position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;" alt="">
+                </div>
+              </div>
+              <span style="font-size:13px;color:#333;text-align:center;line-height:16px;width:70px;flex-shrink:0;">반려동물</span>
+            </div>
+
+          </div><!-- /Row 2 -->
+
+        </div><!-- /GridScroll -->
+
+        <!-- 하단배너 (80px) -->
+        <div style="background:white;height:80px;position:relative;width:375px;overflow:clip;">
+          <div style="position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:300px;">
+            <div style="position:absolute;left:50%;transform:translateX(-50%);background:rgba(255,0,239,0.1);display:flex;gap:8px;height:42px;align-items:center;justify-content:center;top:50%;margin-top:-21px;border-radius:100px;padding:12px 20px 12px 22px;white-space:nowrap;">
+              <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+                <div style="width:20px;height:25px;position:relative;flex-shrink:0;overflow:hidden;">
+                  <img src="http://localhost:3845/assets/e80a28d5cb2a4410e85147ae832cc00b3fc36a34.png"
+                    style="position:absolute;height:98.22%;left:0;top:-1.03%;width:100%;max-width:none;" alt="">
+                </div>
+                <span style="font-size:13.5px;color:#111;line-height:14px;white-space:nowrap;">카시아속초</span>
+              </div>
+              <div style="height:18px;width:3px;position:relative;flex-shrink:0;">
+                <img src="http://localhost:3845/assets/84039bd495eb13594602978548c6710c45c2fa36.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+                <span style="font-weight:700;font-size:13px;color:#111;line-height:16px;white-space:nowrap;">오늘 단 하루! 역대급 혜택</span>
+                <div style="height:7px;width:3px;position:relative;flex-shrink:0;">
+                  <div style="position:absolute;inset:-10.71% -25%;">
+                    <img src="http://localhost:3845/assets/1aeb08489ad932274d7dbff6fcab91fff907eb40.svg"
+                      style="display:block;width:100%;height:100%;max-width:none;" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /전광판 -->
+
+    </div><!-- /scrollable content -->
+
+  </div><!-- /device-scroll -->
+
+
+  <!-- ┌──────────────────────────────┐
+       │  FIXED TAB BAR               │
+       └──────────────────────────────┘ -->
+  <div class="tabbar-fixed">
+
+    <!-- FloatingBtnBrand (DREAME) -->
+    <div style="padding-left:12px;padding-top:8px;">
+      <div style="height:56px;position:relative;width:162px;">
+        <!-- 닫기 버튼 -->
+        <div style="position:absolute;left:144px;top:0;width:18px;height:18px;cursor:pointer;">
+          <div style="position:absolute;background:#111;inset:0;border-radius:10px;"></div>
+          <div style="position:absolute;inset:33.33%;">
+            <div style="position:absolute;inset:-5.89%;">
+              <img src="http://localhost:3845/assets/4931f5cdf1ffbbb4aee72e4857578cc1c712d608.svg"
+                style="display:block;width:100%;height:100%;max-width:none;" alt="">
+            </div>
+          </div>
+        </div>
+        <!-- 플로팅 배너 -->
+        <div style="position:absolute;height:56px;left:0;overflow:clip;border-radius:100px;box-shadow:0 0 4px 0 rgba(0,0,0,0.2);top:0;width:144px;">
+          <div style="position:absolute;height:56px;left:0;top:0;width:144px;overflow:clip;
+            -webkit-mask-image:url('http://localhost:3845/assets/23b3aee1289170af3681955e6da374d6e53a628c.svg');
+            mask-image:url('http://localhost:3845/assets/23b3aee1289170af3681955e6da374d6e53a628c.svg');
+            -webkit-mask-mode:alpha;mask-mode:alpha;
+            -webkit-mask-composite:intersect;mask-composite:intersect;
+            -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+            -webkit-mask-position:0 0;mask-position:0 0;
+            -webkit-mask-size:144px 56px;mask-size:144px 56px;">
+            <!-- fill 배경 -->
+            <img src="http://localhost:3845/assets/4b690023d07aa56570e2216f4cbb920704ae1635.svg"
+              style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+            <!-- 상품 이미지 -->
+            <div style="position:absolute;left:calc(50% - 44px);top:calc(50% + 1px);transform:translate(-50%,-50%);width:50.4px;height:50.4px;">
+              <img src="http://localhost:3845/assets/2c96dcfe94f8a27b123f4af8acf8a19650198a50.png"
+                style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+            </div>
+            <!-- 로고 + 브랜드명 -->
+            <div style="position:absolute;left:56px;top:50%;transform:translateY(-50%);width:72px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;justify-content:center;">
+              <div style="height:9.297px;position:relative;flex-shrink:0;width:73.065px;">
+                <img src="http://localhost:3845/assets/a4924b70019f0d84e83125b7143dd815a948920c.png"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none;" alt="">
+              </div>
+              <span style="font-size:12px;font-weight:500;color:white;line-height:12px;letter-spacing:-0.12px;white-space:nowrap;">드리미</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /floating brand -->
+
+    <!-- 탭바 (98px) -->
+    <div style="height:98px;overflow:clip;position:relative;width:375px;">
+      <!-- 탭바 하단 바 -->
+      <div style="position:absolute;left:0;top:8px;width:375px;overflow:clip;">
+        <div style="background:white;display:flex;height:56px;align-items:flex-end;box-shadow:0 0 5px 0 rgba(0,0,0,0.15);">
+          <!-- 사이드메뉴 -->
+          <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:10px 20px;">
+            <div style="width:36px;height:36px;position:relative;overflow:clip;">
+              <div style="position:absolute;top:23.61%;left:21.59%;right:20.79%;bottom:25%;">
+                <img src="http://localhost:3845/assets/1085dd73a4626d4ee6442e3b525abd21d5543b06.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+          </div>
+          <!-- 검색 -->
+          <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:10px 20px;">
+            <div style="width:36px;height:36px;position:relative;overflow:clip;">
+              <div style="position:absolute;top:50%;left:20.14%;right:18.68%;transform:translateY(-50%);height:22.274px;">
+                <img src="http://localhost:3845/assets/ac130b8c467e3cf5ecdf6dd78e2fbb0a38eedf07.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+          </div>
+          <!-- 홈 (CustomHomeButton 자리) -->
+          <div style="flex:1;min-width:0;height:56px;display:flex;align-items:center;justify-content:center;padding:10px 18px;"></div>
+          <!-- MY -->
+          <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:10px 18px;">
+            <div style="width:36px;height:36px;position:relative;overflow:clip;">
+              <div style="position:absolute;top:17.36%;right:20.14%;bottom:18.75%;left:20.14%;">
+                <img src="http://localhost:3845/assets/cd76a3a56322f2bae13349c2951c4cdb05e9e159.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+          </div>
+          <!-- 최근본상품 -->
+          <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:10px 18px;">
+            <div style="width:36px;height:36px;position:relative;overflow:clip;">
+              <div style="position:absolute;inset:19.44%;">
+                <img src="http://localhost:3845/assets/8d4e4306a0d3f3aa0ed417f48ee5ab279aa1a705.svg"
+                  style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 홈 인디케이터 -->
+      <div style="position:absolute;background:white;left:0;top:64px;width:375px;display:flex;align-items:center;justify-content:center;padding:21px 0 8px;">
+        <div style="background:black;height:5px;border-radius:100px;width:134px;flex-shrink:0;"></div>
+      </div>
+      <!-- CustomHomeButton (left:151px top:-8px 72x72) -->
+      <div style="position:absolute;left:151px;overflow:clip;border-radius:8px;width:72px;height:72px;top:-8px;">
+        <div style="position:absolute;background:#BBBBBB;filter:blur(4.077px);border-radius:24px;opacity:0.8;top:17.95%;right:16.67%;bottom:16.67%;left:16.67%;"></div>
+        <button aria-label="홈" style="position:absolute;left:10px;top:8px;width:52px;height:52px;border-radius:100px;background:linear-gradient(135deg,rgb(255,90,46) 0%,rgb(255,0,56) 51.96%,rgb(255,0,239) 100%);border:none;padding:0;cursor:pointer;overflow:clip;">
+          <div style="position:absolute;left:0;top:0;width:52px;height:52px;border-radius:100px;">
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:18px;width:26px;height:27.178px;">
+              <img src="http://localhost:3845/assets/28d53376f134126efaf638a02e905e5e194584de.svg"
+                style="position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;" alt="">
+            </div>
+          </div>
+        </button>
+      </div>
+    </div><!-- /탭바 -->
+
+  </div><!-- /tabbar-fixed -->
+
+</div><!-- /device -->
+
+<!-- 하단 노트 -->
+<p style="margin-top:24px;font-size:11px;color:#999;text-align:center;letter-spacing:0.5px;">
+  Figma Dev Mode 실행 중 · localhost:3845 에셋 사용
+</p>
+
+</body>
+</html>
